@@ -1,0 +1,40 @@
+<script setup lang="ts">
+const colorMode = useColorMode()
+
+function toggleColorMode(): void {
+  if (colorMode.preference === 'light') {
+    colorMode.preference = 'dark'
+  } else {
+    colorMode.preference = 'light'
+  }
+}
+</script>
+
+<template>
+  <header class="fixed top-0 left-0 right-0 w-screen p-10">
+    <nav class="flex items-center justify-between">
+      <NuxtLink to="/">
+        <NuxtImg class="h-6" src="/icons/logo.svg" alt="logo"/>
+      </NuxtLink>
+      <ul class="flex items-center gap-5 font-medium">
+        <li>
+          <NuxtLink to="/blogs">Blog</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/about">About</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/contact">Contact</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/register">Sign in</NuxtLink>
+        </li>
+        <li>
+          <button @click="toggleColorMode">
+            <Icon size="24" :name="colorMode.preference == 'dark'  ? 'lucide:moon' : 'lucide:sun'"/>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</template>
