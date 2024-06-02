@@ -16,7 +16,7 @@ function toggleColorMode(): void {
       <NuxtLink to="/">
         <NuxtImg class="h-6" src="/icons/logo.svg" alt="logo"/>
       </NuxtLink>
-      <ul class="flex items-center gap-5 font-medium">
+      <ul class="hidden md:flex items-center gap-5 font-medium text-white">
         <li>
           <NuxtLink to="/blogs">Blog</NuxtLink>
         </li>
@@ -31,10 +31,27 @@ function toggleColorMode(): void {
         </li>
         <li>
           <button @click="toggleColorMode">
-            <Icon size="24" :name="colorMode.preference == 'dark'  ? 'lucide:moon' : 'lucide:sun'"/>
+            <Icon
+                class="text-white"
+                size="24"
+                :name="colorMode.preference == 'dark'  ? 'lucide:moon' : 'lucide:sun'"/>
           </button>
         </li>
       </ul>
+      <div class="md:hidden flex items-center gap-4">
+        <button @click="toggleColorMode">
+          <Icon
+              class="text-white"
+              size="24"
+              :name="colorMode.preference == 'dark'  ? 'lucide:moon' : 'lucide:sun'"/>
+        </button>
+        <button>
+          <Icon
+              class="text-white"
+              size="24"
+              name="lucide:menu"/>
+        </button>
+      </div>
     </nav>
   </header>
 </template>
