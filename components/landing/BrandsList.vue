@@ -29,9 +29,9 @@ const brands = ref([
 
 <template>
   <div class="container mx-auto my-28">
-    <div class="flex items-center justify-between mb-10">
-      <h2 class="text-4xl font-bold">Explore Our Premium Brands</h2>
-      <NuxtLink class="font-medium" to="/brands">
+    <div class="flex items-center justify-between gap-4 mb-10">
+      <h2 class="text-2xl font-bold md:text-4xl">Explore Our Premium Brands</h2>
+      <NuxtLink class="flex items-center font-medium" to="/brands">
         Show All Brands
         <Icon class="ml-2" name="bi:arrow-up-right"/>
       </NuxtLink>

@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
-import {Separator} from '@/components/ui/separator'
 import {Button} from '@/components/ui/button'
+import suv from "/icons/car_type/suv.svg"
+import sedan from "/icons/car_type/sedan.svg"
+import hatchback from "/icons/car_type/hatchback.svg"
+import coupe from "/icons/car_type/coupe.svg"
+import hybrid from "/icons/car_type/hybrid.svg"
 
 const searchQuery = ref<Record<string, string>>({
   condition: "",
@@ -18,6 +22,38 @@ function searchCar(): void {
   }
   const params = new URLSearchParams(result.join("&"))
   console.log(`/cars?${params.toString()}`)
+}
+
+const carTypes = ref([
+  {
+    id: 1,
+    name: "SUV",
+    icon: suv
+  },
+  {
+    id: 2,
+    name: "Sedan",
+    icon: sedan
+  },
+  {
+    id: 3,
+    name: "Hatchback",
+    icon: hatchback
+  },
+  {
+    id: 4,
+    name: "Coupe",
+    icon: coupe
+  },
+  {
+    id: 5,
+    name: "Hybrid",
+    icon: hybrid
+  },
+])
+
+function searchCarsByType(type: string): void {
+  navigateTo(`/cars?type=${type.toLowerCase()}`)
 }
 </script>
 
@@ -48,7 +84,6 @@ function searchCar(): void {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Separator orientation="vertical"/>
         <Select v-model="searchQuery.brand">
           <SelectTrigger class="flex-1">
             <SelectValue placeholder="Brand"/>
@@ -67,7 +102,6 @@ function searchCar(): void {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Separator orientation="vertical"/>
         <Select v-model="searchQuery.model">
           <SelectTrigger class="flex-1">
             <SelectValue placeholder="Model"/>
@@ -86,7 +120,6 @@ function searchCar(): void {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Separator orientation="vertical"/>
         <Button class="bg-[#405FF2] py-6 px-8 rounded-full text-white w-full md:flex-1 hover:bg-blue-700">
           <Icon
               class="mr-2"
@@ -95,6 +128,19 @@ function searchCar(): void {
           Find Listing
         </Button>
       </form>
+      <div class="flex flex-col gap-10 mt-16">
+        <h3 class="text-center">Or Browse Featured Model</h3>
+        <div class="flex flex-col items-center justify-center flex-wrap gap-4 sm:flex-row">
+          <div
+              @click="searchCarsByType(carType.name)"
+              v-for="carType in carTypes"
+              :key="carType.id"
+              class="flex items-center justify-center gap-2 py-2 px-8 rounded-full bg-white bg-opacity-20 cursor-pointer transition duration-200 w-full sm:w-fit hover:bg-opacity-30 dark:bg-zinc-800 dark:bg-opacity-70 dark:hover:bg-opacity-100">
+            <NuxtImg class="h-8" :src="carType.icon" :alt="carType.name"/>
+            <span>{{ carType.name }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>

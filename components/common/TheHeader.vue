@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const colorMode = useColorMode()
 
 function toggleColorMode(): void {
@@ -7,6 +8,14 @@ function toggleColorMode(): void {
   } else {
     colorMode.preference = 'light'
   }
+}
+
+const emit = defineEmits<{
+  "openMobileMenu": () => void
+}>()
+
+function openMobileMenu(): void {
+  emit("openMobileMenu")
 }
 </script>
 
@@ -45,7 +54,7 @@ function toggleColorMode(): void {
               size="24"
               :name="colorMode.preference == 'dark'  ? 'lucide:moon' : 'lucide:sun'"/>
         </button>
-        <button>
+        <button @click="openMobileMenu">
           <Icon
               class="text-white"
               size="24"
