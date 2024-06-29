@@ -20,7 +20,7 @@ function openMobileMenu(): void {
 </script>
 
 <template>
-  <header class="fixed top-0 left-0 right-0 w-screen p-10 bg-gradient-to-b from-zinc-900 to-transparent">
+  <header class="fixed top-0 left-0 right-0 z-20 w-screen p-10 bg-gradient-to-b from-zinc-900 to-transparent">
     <nav class="flex items-center justify-between">
       <NuxtLink to="/">
         <NuxtImg class="h-6" src="/icons/logo.svg" alt="logo"/>

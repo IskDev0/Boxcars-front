@@ -24,5 +24,10 @@ export default defineNuxtConfig({
     },
     colorMode: {
         classSuffix: ''
+    },
+    runtimeConfig: {
+        public: {
+            baseUrl: process.env.NUXT_BASE_URL
+        }
     }
 })

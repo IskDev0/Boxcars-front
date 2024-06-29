@@ -120,7 +120,7 @@ function searchCarsByType(type: string): void {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button class="bg-[#405FF2] py-6 px-8 rounded-full text-white w-full md:flex-1 hover:bg-blue-700">
+        <Button class="py-6 px-8 rounded-full md:flex-1">
           <Icon
               class="mr-2"
               size="24"
