@@ -10,6 +10,9 @@ import type {ICar} from "~/types/cars";
 import Badge from "~/components/ui/badge/Badge.vue";
 import ReviewsSection from "~/components/car/ReviewsSection.vue";
 import type {IReview} from "~/types/reviews";
+import CarOverview from "~/components/car/CarOverview.vue";
+import CarDemensions from "~/components/car/CarDemensions.vue";
+import CarEngine from "~/components/car/CarEngine.vue";
 
 const {data: car} = await httpClient<ICar>("/cars/" + useRoute().params.id, {
   method: "GET",
@@ -148,92 +151,9 @@ const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute
         </Swiper>
         <section>
           <h2 class="text-2xl font-bold mt-12 mb-8">Car Overview</h2>
-          <div v-if="overview" class="grid grid-cols-1 md:grid-cols-2 gap-5 font-medium">
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="mingcute:car-3-line"/>
-                <span>Body</span>
-              </div>
-              <span>{{ overview.body }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="teenyicons:user-outline"/>
-                <span>Condition</span>
-              </div>
-              <span>{{ overview.condition }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="simple-icons:speedtest"/>
-                <span>Mileage</span>
-              </div>
-              <span>{{ overview.mileage }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="ph:engine"/>
-                <span>Engine Size</span>
-              </div>
-              <span>{{ overview.engine_size }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="solar:gas-station-outline"/>
-                <span>Fuel Type</span>
-              </div>
-              <span>{{ overview.fuel_type }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="mdi:car-door"/>
-                <span>Door</span>
-              </div>
-              <span>{{ overview.doors }} doors</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="ph:calendar-dots"/>
-                <span>Year</span>
-              </div>
-              <span>{{ overview.year }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="mdi:piston"/>
-                <span>Cylinder</span>
-              </div>
-              <span>{{ overview.cylinder }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="material-symbols-light:auto-transmission-outline"/>
-                <span>Transmission</span>
-              </div>
-              <span>{{ overview.transmission }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="tdesign:fill-color-1"/>
-                <span>Color</span>
-              </div>
-              <span>{{ overview.colors.join(', ') }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="ph:steering-wheel"/>
-                <span>Drive Type</span>
-              </div>
-              <span>{{ overview.drive_type }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <div class="flex items-center gap-2">
-                <Icon size="20" name="ci:file-document"/>
-                <span>VIN</span>
-              </div>
-              <span>{{ overview.vin }}</span>
-            </div>
-          </div>
+          <CarOverview
+              v-if="overview"
+              :overview="overview"/>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">Description</h2>
           <p v-html="car.description"></p>
@@ -242,130 +162,19 @@ const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute
           </Button>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">Features</h2>
-          <div class="grid grid-cols-1 gap-5 lg:gap-0 md:grid-cols-2 lg:grid-cols-4">
-            <div class="flex flex-col gap-2">
-              <h3 class="font-medium text-lg">Interior</h3>
-              <ul class="flex flex-col gap-3">
-               <span class="flex items-center gap-3" v-for="item in features.interior">
-                 <span class="bg-secondary text-primary rounded-full w-6 h-6 inline-flex items-center justify-center">
-                   <Icon name="mdi:check-bold"/>
-                 </span>
-                  <li>{{ item }}</li>
-               </span>
-              </ul>
-            </div>
-            <div class="flex flex-col gap-2">
-              <h3 class="font-medium text-lg">Safety</h3>
-              <ul class="flex flex-col gap-3">
-               <span class="flex items-center gap-3" v-for="item in features.safety">
-                 <span class="bg-secondary text-primary rounded-full w-6 h-6 inline-flex items-center justify-center">
-                   <Icon name="mdi:check-bold"/>
-                 </span>
-                  <li>{{ item }}</li>
-               </span>
-              </ul>
-            </div>
-            <div class="flex flex-col gap-2">
-              <h3 class="font-medium text-lg">Exterior</h3>
-              <ul class="flex flex-col gap-3">
-               <span class="flex items-center gap-3" v-for="item in features.exterior">
-                 <span class="bg-secondary text-primary rounded-full w-6 h-6 inline-flex items-center justify-center">
-                   <Icon name="mdi:check-bold"/>
-                 </span>
-                  <li>{{ item }}</li>
-               </span>
-              </ul>
-            </div>
-            <div class="flex flex-col gap-2">
-              <h3 class="font-medium text-lg">Comfort & Convenience</h3>
-              <ul class="flex flex-col gap-3">
-               <span class="flex items-center gap-3" v-for="item in features.convenience">
-                 <span class="bg-secondary text-primary rounded-full w-6 h-6 inline-flex items-center justify-center">
-                   <Icon name="mdi:check-bold"/>
-                 </span>
-                  <li>{{ item }}</li>
-               </span>
-              </ul>
-            </div>
-          </div>
+          <CarFeatures :features="features"/>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">Dimensions & Capacity</h2>
-          <div v-if="dimensionsAndCapacity" class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-10 font-medium">
-            <div class="grid grid-cols-2">
-              <span>Length</span>
-              <span class="text-right">{{ dimensionsAndCapacity.length }}mm</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Width</span>
-              <span class="text-right">{{ dimensionsAndCapacity.width }}mm</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Height</span>
-              <span class="text-right">{{ dimensionsAndCapacity.height }}mm</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Width (including mirrors)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.width_full }}mm</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Wheelbase</span>
-              <span class="text-right">{{ dimensionsAndCapacity.wheelbase }}mm</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Gross Vehicle Weight (kg)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.weight }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Height (including roof rails)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.height_full }}mm</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Max. Loading Weight (kg)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.loading_weight }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Luggage Capacity (Seats Up - Litres)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.luggage_capacity }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Max. Roof Load (kg)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.roof_load }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Luggage Capacity (Seats Down - Litres)</span>
-              <span class="text-right">{{ dimensionsAndCapacity.luggage_capacity_full }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>No. of Seats</span>
-              <span class="text-right">{{ dimensionsAndCapacity.seats }}</span>
-            </div>
-          </div>
+          <CarDemensions
+              v-if="dimensionsAndCapacity"
+              :dimensions-and-capacity="dimensionsAndCapacity"/>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">Engine and Transmission</h2>
-          <div v-if="engineAndTransmission" class="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-10 font-medium">
-            <div class="grid grid-cols-2">
-              <span>Fuel Tank Capacity (Litres)</span>
-              <span class="text-right">{{ engineAndTransmission.fuel_capacity }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Minimum Kerbweight (kg)</span>
-              <span class="text-right">{{ engineAndTransmission.kerb_weight }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Max. Towing Weight - Braked (kg)</span>
-              <span class="text-right">{{ engineAndTransmission.towing_weight_braked }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Turning Circle - Kerb to Kerb(m)</span>
-              <span class="text-right">{{ engineAndTransmission.turning_circle }}</span>
-            </div>
-            <div class="grid grid-cols-2">
-              <span>Max. Towing Weight - Unbraked (kg)</span>
-              <span class="text-right">{{ engineAndTransmission.towing_weight_unbraked }}</span>
-            </div>
-          </div>
+          <CarEngine
+              v-if="engineAndTransmission"
+              :engine-and-transmission="engineAndTransmission"/>
           <Separator class="my-12"/>
-          <h2 class="text-2xl font-bold mt-12 mb-8">{{ reviews.count ? reviews.count : "No" }} Reviews</h2>
+          <h2 class="text-2xl font-bold mt-12 mb-8">{{ reviews ? reviews.count : "No" }} Reviews</h2>
           <ReviewsSection
               v-if="reviews.reviews"
               :reviews="reviews.reviews"
