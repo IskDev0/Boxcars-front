@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator,} from '@/components/ui/breadcrumb'
 import type {ICar} from "~/types/cars";
 import Badge from "~/components/ui/badge/Badge.vue";
 import ReviewsSection from "~/components/car/ReviewsSection.vue";
 import type {IReview} from "~/types/reviews";
 import CarOverview from "~/components/car/CarOverview.vue";
-import CarDemensions from "~/components/car/CarDemensions.vue";
+import CarDimensions from "~/components/car/CarDimensions.vue";
 import CarEngine from "~/components/car/CarEngine.vue";
 
 const {data: car} = await httpClient<ICar>("/cars/" + useRoute().params.id, {
@@ -162,10 +156,10 @@ const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute
           </Button>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">Features</h2>
-          <CarFeatures :features="features"/>
+          <CarFeatures v-if="features" :features="features"/>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">Dimensions & Capacity</h2>
-          <CarDemensions
+          <CarDimensions
               v-if="dimensionsAndCapacity"
               :dimensions-and-capacity="dimensionsAndCapacity"/>
           <Separator class="my-12"/>
@@ -202,8 +196,10 @@ const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute
         </div>
         <div class="border p-7 rounded-lg lg:mt-7 flex-1 lg:flex-none">
           <div class="flex flex-col gap-2">
-            <NuxtImg class="rounded-full w-20 h-20" :src="car.dealer_contact.profile_image"
-                     :alt="car.dealer_contact.name"/>
+            <NuxtImg
+                class="rounded-full w-20 h-20"
+                :src="car.dealer_contact.profile_image"
+                :alt="car.dealer_contact.name"/>
             <span class="text-md font-medium">{{ car.dealer_contact.name }}</span>
             <span>{{ car.dealer_contact.address }}</span>
             <div class="flex items-center justify-between">

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type {IReview} from "~/types/reviews";
+import formatDate from "~/utils/formatDate";
 
-const props = defineProps<{
+defineProps<{
   review: IReview
 }>()
 
@@ -14,7 +15,7 @@ const props = defineProps<{
       <div class="flex items-center gap-4">
         <NuxtImg :src="review.user.avatar"/>
         <h2 class="font-medium text-lg">{{ review.user.username }}</h2>
-        <span>{{ review.created_at }}</span>
+        <span>{{ formatDate(review.created_at) }}</span>
       </div>
       <button>
         <Icon size="24" name="fluent:delete-12-regular"/>
