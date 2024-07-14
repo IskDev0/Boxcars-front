@@ -8,6 +8,8 @@ import {
 } from '@/components/ui/breadcrumb'
 import type {ICar} from "~/types/cars";
 import Badge from "~/components/ui/badge/Badge.vue";
+import ReviewsSection from "~/components/car/ReviewsSection.vue";
+import type {IReview} from "~/types/reviews";
 
 const {data: car} = await httpClient<ICar>("/cars/" + useRoute().params.id, {
   method: "GET",
@@ -39,6 +41,10 @@ const dimensionsAndCapacity = computed(() => {
 const engineAndTransmission = computed(() => {
   if (!car.value) return ""
   return car.value.features.engine_and_transmission
+})
+
+const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute().params.id, {
+  method: "GET",
 })
 </script>
 
@@ -359,7 +365,12 @@ const engineAndTransmission = computed(() => {
             </div>
           </div>
           <Separator class="my-12"/>
-          <h2 class="text-2xl font-bold mt-12 mb-8">Location</h2>
+          <h2 class="text-2xl font-bold mt-12 mb-8">{{ reviews.count ? reviews.count : "No" }} Reviews</h2>
+          <ReviewsSection
+              v-if="reviews.reviews"
+              :reviews="reviews.reviews"
+              :overall_data="reviews.overall_data"/>
+          <p v-else>No reviews</p>
         </section>
       </div>
       <div class="flex flex-col md:flex-row w-full gap-10 lg:gap-0 lg:flex-col lg:w-1/3">
