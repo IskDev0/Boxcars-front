@@ -10,7 +10,8 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         'nuxt-swiper',
         '@vueuse/nuxt',
-        '@nuxtjs/color-mode'
+        '@nuxtjs/color-mode',
+        "@nuxtjs/leaflet"
     ],
     shadcn: {
         prefix: '',

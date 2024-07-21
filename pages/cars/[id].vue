@@ -168,9 +168,20 @@ const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute
               v-if="engineAndTransmission"
               :engine-and-transmission="engineAndTransmission"/>
           <Separator class="my-12"/>
+          <h2 class="text-2xl font-bold mt-12">Location</h2>
+          <p class="mt-8 mb-4">{{car.location.address}}</p>
+          <a
+              class="flex items-center gap-2 text-primary"
+              target="_blank"
+              :href="`https://maps.google.com/?q=${car.location.latitude},${car.location.longitude}`">
+            <span>Get Direction</span>
+            <Icon name="bi:arrow-up-right"/>
+          </a>
+          <CarLocation :location="{lat: car.location.latitude, lng: car.location.longitude}"/>
+          <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">{{ reviews ? reviews.count : "No" }} Reviews</h2>
           <ReviewsSection
-              v-if="reviews.reviews"
+              v-if="reviews"
               :reviews="reviews.reviews"
               :overall_data="reviews.overall_data"/>
           <p v-else>No reviews</p>
