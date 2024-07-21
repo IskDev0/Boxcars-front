@@ -7,8 +7,10 @@ import type {IReview} from "~/types/reviews";
 import CarOverview from "~/components/car/CarOverview.vue";
 import CarDimensions from "~/components/car/CarDimensions.vue";
 import CarEngine from "~/components/car/CarEngine.vue";
+import FinancingCalculator from "~/components/car/FinancingCalculator.vue";
+import {getHttpClient} from "~/composables/get.httpClient";
 
-const {data: car} = await httpClient<ICar>("/cars/" + useRoute().params.id, {
+const {data: car} = await getHttpClient<ICar>("/cars/" + useRoute().params.id, {
   method: "GET",
 })
 
@@ -40,7 +42,7 @@ const engineAndTransmission = computed(() => {
   return car.value.features.engine_and_transmission
 })
 
-const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute().params.id, {
+const {data: reviews} = await getHttpClient<IReview[]>("/review?car_id=" + useRoute().params.id, {
   method: "GET",
 })
 </script>
@@ -178,6 +180,8 @@ const {data: reviews} = await httpClient<IReview[]>("/review?car_id=" + useRoute
             <Icon name="bi:arrow-up-right"/>
           </a>
           <CarLocation :location="{lat: car.location.latitude, lng: car.location.longitude}"/>
+          <Separator class="my-12"/>
+          <FinancingCalculator :price="car.short_data.price"/>
           <Separator class="my-12"/>
           <h2 class="text-2xl font-bold mt-12 mb-8">{{ reviews ? reviews.count : "No" }} Reviews</h2>
           <ReviewsSection

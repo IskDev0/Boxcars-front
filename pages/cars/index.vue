@@ -6,8 +6,9 @@ import {h} from 'vue';
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "~/components/ui/select";
 import {Button} from "~/components/ui/button";
 import CarsList from "~/components/car/CarsList.vue";
+import {getHttpClient} from "~/composables/get.httpClient";
 
-const {data:cars} = await httpClient<ShortCar[]>("/cars?type=short", {
+const {data:cars} = await getHttpClient<ShortCar[]>("/cars?type=short", {
   method: "GET",
   transform: (data) => {
     return data.cars

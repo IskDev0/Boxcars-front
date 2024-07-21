@@ -1,7 +1,7 @@
 import type {FetchContext, FetchOptions, FetchResponse} from "ofetch";
 import {type RuntimeConfig} from "nuxt/schema";
 
-export const httpClient = <T>(url: string, options?: FetchOptions): any => {
+export const getHttpClient = <T>(url: string, options?: FetchOptions): any => {
 
     const config: RuntimeConfig = useRuntimeConfig()
 
@@ -13,6 +13,7 @@ export const httpClient = <T>(url: string, options?: FetchOptions): any => {
         retry: 1,
         retryStatusCodes: [401],
         retryDelay: 500,
+        ignoreResponseErrors: true
     }
 
     return useFetch<T>(url, {
